@@ -24,7 +24,7 @@
 /*	VéritéCo JS Master
 	Version: 0.6
 	Date: June 19, 2012
-	Copyright 2012 VéritéCo unless part of TimelineJS, 
+	Copyright 2012 VéritéCo unless part of TimelineJS,
 	if part of TimelineJS then it inherits TimelineJS's license.
 	Designed and built by Zach Wise digitalartwork.net
 ================================================== */
@@ -106,77 +106,77 @@ var global = (function () {
 /* VMM
 ================================================== */
 if (typeof VMM == 'undefined') {
-	
+
 	/* Main Scope Container
 	================================================== */
 	//var VMM = {};
 	var VMM = Class.extend({});
-	
+
 	/* Debug
 	================================================== */
 	VMM.debug = true;
-	
+
 	/* Master Config
 	================================================== */
-	
+
 	VMM.master_config = ({
-		
+
 		init: function() {
 			return this;
 		},
-		
+
 		sizes: {
 			api: {
 				width:			0,
 				height:			0
 			}
 		},
-		
+
 		vp:				"Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
-		
+
 		api_keys_master: {
 			flickr:		"RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
 			google:		"jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo=",
 			twitter:	""
 		},
-		
+
 		timers: {
 			api:			7000
 		},
-		
+
 		api:	{
 			pushques:		[]
-			
+
 		},
-		
+
 		twitter: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		flickr: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		youtube: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		vimeo: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		googlemaps: {
 			active:			false,
 			map_active:		false,
@@ -185,21 +185,21 @@ if (typeof VMM == 'undefined') {
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		googledocs: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		googleplus: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		},
-		
+
 		wikipedia: {
 			active:			false,
 			array:			[],
@@ -207,81 +207,81 @@ if (typeof VMM == 'undefined') {
 			que:			[],
 			tries:			0
 		},
-		
+
 		soundcloud: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
 			que:			[]
 		}
-		
+
 	}).init();
-	
+
 	//VMM.createElement(tag, value, cName, attrs, styles);
 	VMM.createElement = function(tag, value, cName, attrs, styles) {
-		
+
 		var ce = "";
-		
+
 		if (tag != null && tag != "") {
-			
+
 			// TAG
 			ce += "<" + tag;
 			if (cName != null && cName != "") {
 				ce += " class='" + cName + "'";
 			};
-			
+
 			if (attrs != null && attrs != "") {
 				ce += " " + attrs;
 			};
-			
+
 			if (styles != null && styles != "") {
 				ce += " style='" + styles + "'";
 			};
-			
+
 			ce += ">";
-			
+
 			if (value != null && value != "") {
 				ce += value;
 			}
-			
+
 			// CLOSE TAG
 			ce = ce + "</" + tag + ">";
 		}
-		
+
 		return ce;
-		
+
     };
 
 	VMM.createMediaElement = function(media, caption, credit) {
-		
+
 		var ce = "";
-		
+
 		var _valid = false;
-		
+
 		ce += "<div class='media'>";
-		
+
 		if (media != null && media != "") {
-			
+
 			valid = true;
-			
+
 			ce += "<img src='" + media + "'>";
-			
+
 			// CREDIT
 			if (credit != null && credit != "") {
 				ce += VMM.createElement("div", credit, "credit");
 			}
-			
+
 			// CAPTION
 			if (caption != null && caption != "") {
 				ce += VMM.createElement("div", caption, "caption");
 			}
 
 		}
-		
+
 		ce += "</div>";
-		
+
 		return ce;
-		
+
     };
 
 	// Hide URL Bar for iOS and Android by Scott Jehl
@@ -304,7 +304,7 @@ if (typeof VMM == 'undefined') {
 					clearInterval( bodycheck );
 					scrollTop = "scrollTop" in doc.body ? doc.body.scrollTop : 1;
 					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-				}	
+				}
 			}, 15 );
 
 			win.addEventListener( "load", function(){
@@ -315,7 +315,7 @@ if (typeof VMM == 'undefined') {
 			}, false );
 		}
 	};
-	
+
 
 }
 
@@ -5050,6 +5050,17 @@ if (typeof VMM.Slider != 'undefined') {
 			$wrap	=	VMM.appendAndGetElement(element, "<div>", "content");
 			$slide	=	VMM.appendAndGetElement($wrap, "<div>");
 			
+			/* HEADLINE
+			================================================== */
+			if (data.headline != null && data.headline != "") {
+				c.has.headline	=	true;
+				if (data.type == "start") {
+					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
+				} else { 
+					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"));
+				}
+			}
+			
 			/* DATE
 			================================================== */
 			if (data.startdate != null && data.startdate != "") {
@@ -5065,24 +5076,14 @@ if (typeof VMM.Slider != 'undefined') {
 						}
 						
 						if (st != en) {
-							c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
+							c.text += VMM.createElement("h3", st + " &mdash; " + en + tag, "date");
 						} else {
-							c.text += VMM.createElement("h2", st + tag, "date");
+							c.text += VMM.createElement("h3", st + tag, "date");
 						}
 					}
 				}
 			}
-			
-			/* HEADLINE
-			================================================== */
-			if (data.headline != null && data.headline != "") {
-				c.has.headline	=	true;
-				if (data.type == "start") {
-					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
-				} else { 
-					c.text		+=	VMM.createElement("h3", VMM.Util.linkify_with_twitter(data.headline, "_blank"));
-				}
-			}
+
 			
 			/* TEXT
 			================================================== */
@@ -5093,9 +5094,9 @@ if (typeof VMM.Slider != 'undefined') {
 			
 			if (c.has.text || c.has.headline) {
 				c.text			=	VMM.createElement("div", c.text, "container");
-				//$text		=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
+				$text		=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
 				
-				$text		=	VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
+				//$text		=	VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
 				
 			}
 			
@@ -5945,6 +5946,7 @@ Utf8.decode = function(strUtf) {
 	* GNU General Public License for more details.
 
 	* http://www.gnu.org/licenses/
+	*
 
 */  
 

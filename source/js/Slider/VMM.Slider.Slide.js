@@ -177,6 +177,17 @@ if (typeof VMM.Slider != 'undefined') {
 			$wrap	=	VMM.appendAndGetElement(element, "<div>", "content");
 			$slide	=	VMM.appendAndGetElement($wrap, "<div>");
 			
+			/* HEADLINE
+			================================================== */
+			if (data.headline != null && data.headline != "") {
+				c.has.headline	=	true;
+				if (data.type == "start") {
+					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
+				} else { 
+					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"));
+				}
+			}
+			
 			/* DATE
 			================================================== */
 			if (data.startdate != null && data.startdate != "") {
@@ -192,24 +203,14 @@ if (typeof VMM.Slider != 'undefined') {
 						}
 						
 						if (st != en) {
-							c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
+							c.text += VMM.createElement("h3", st + " &mdash; " + en + tag, "date");
 						} else {
-							c.text += VMM.createElement("h2", st + tag, "date");
+							c.text += VMM.createElement("h3", st + tag, "date");
 						}
 					}
 				}
 			}
-			
-			/* HEADLINE
-			================================================== */
-			if (data.headline != null && data.headline != "") {
-				c.has.headline	=	true;
-				if (data.type == "start") {
-					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
-				} else { 
-					c.text		+=	VMM.createElement("h3", VMM.Util.linkify_with_twitter(data.headline, "_blank"));
-				}
-			}
+
 			
 			/* TEXT
 			================================================== */
@@ -220,9 +221,9 @@ if (typeof VMM.Slider != 'undefined') {
 			
 			if (c.has.text || c.has.headline) {
 				c.text			=	VMM.createElement("div", c.text, "container");
-				//$text		=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
+				$text		=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
 				
-				$text		=	VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
+				//$text		=	VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
 				
 			}
 			
